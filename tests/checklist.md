@@ -1,0 +1,30 @@
+# Checklist de pruebas
+
+- [ ] La pagina se abre correctamente desde `views/index.html`.
+- [ ] El logo de Futbic aparece en la cabecera y en el inicio.
+- [ ] El diseno se adapta a pantalla grande y movil.
+- [ ] Un usuario puede registrarse.
+- [ ] El usuario puede seleccionar su equipo favorito al registrarse.
+- [ ] Un usuario puede iniciar sesion.
+- [ ] La pagina empieza sin partidos si el usuario no ha registrado ninguno.
+- [ ] Cada usuario ve solo sus propios partidos.
+- [ ] El bloque de acceso desaparece cuando el usuario inicia sesion.
+- [ ] El boton de cerrar sesion aparece cuando el usuario esta dentro.
+- [ ] El formulario permite elegir entre LALIGA EA SPORTS y Premier League.
+- [ ] Si se elige LALIGA EA SPORTS, aparecen sus 20 equipos.
+- [ ] Si se elige Premier League, aparecen sus 20 equipos.
+- [ ] El historial muestra los escudos o iniciales de los equipos.
+- [ ] Las observaciones del partido se muestran en el historial.
+- [ ] La valoracion del partido se muestra en el historial.
+- [ ] El historial muestra si hubo ganador o empate.
+- [ ] Las estadisticas muestran equipo favorito y partidos vistos de ese equipo.
+- [ ] Las estadisticas muestran el equipo mas visto.
+- [ ] Las estadisticas muestran la mayor goleada vista.
+- [ ] Las estadisticas muestran la valoracion media.
+- [ ] El formulario muestra errores si faltan datos obligatorios.
+- [ ] El formulario impide goles negativos.
+- [ ] El formulario impide registrar el mismo equipo como local y visitante.
+- [ ] Al guardar un partido aparece en el historial.
+- [ ] Las estadisticas se actualizan al guardar o eliminar partidos.
+- [ ] El filtro por equipo muestra solo los partidos coincidentes.
+- [ ] El archivo `database/futbic.sql` contiene las tablas necesarias.

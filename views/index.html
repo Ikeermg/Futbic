@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maquetacion responsive de Futbic con patron MVVM para registrar partidos vistos de LaLiga.">
+  <title>Futbic | Registro de partidos vistos</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Navegacion principal">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio de Futbic">
+        <img class="brand-logo" src="../assets/img/LogoFutbic.png" alt="Logo de Futbic">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#acceso">Acceso</a></li>
+        <li><a href="#registrar">Registrar</a></li>
+        <li><a href="#historial">Historial</a></li>
+        <li><a href="#estadisticas">Estadisticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="eyebrow">Proyecto DAW MP12</p>
+        <img class="hero-logo" src="../assets/img/LogoFutbic.png" alt="Futbic">
+        <h1 id="hero-title">Registro personal de partidos de futbol</h1>
+        <p>
+          Futbic permite crear un usuario, guardar tus propios partidos vistos
+          de LALIGA EA SPORTS o Premier League y consultar estadisticas personales.
+        </p>
+        <a class="primary-link" href="#acceso">Empezar</a>
+      </div>
+      <div class="hero-panel" aria-label="Resumen de la aplicacion">
+        <div>
+          <span class="metric" id="heroTotal">0</span>
+          <span>partidos registrados</span>
+        </div>
+        <div>
+          <span class="metric" id="heroGoals">0</span>
+          <span>goles totales</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-section" id="acceso" aria-labelledby="access-title">
+      <div class="section-heading">
+        <p class="eyebrow">Acceso de usuario</p>
+        <h2 id="access-title">Crea tu cuenta o inicia sesion</h2>
+      </div>
+
+      <div class="auth-grid">
+        <form class="auth-form" id="registerForm" novalidate>
+          <h3>Registrarse</h3>
+          <div class="field">
+            <label for="registerName">Nombre</label>
+            <input id="registerName" name="registerName" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="registerEmail">Email</label>
+            <input id="registerEmail" name="registerEmail" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="registerPassword">Contraseña</label>
+            <input id="registerPassword" name="registerPassword" type="password" autocomplete="new-password" required>
+          </div>
+          <div class="field">
+            <label for="registerFavoriteTeam">Equipo favorito</label>
+            <select id="registerFavoriteTeam" name="registerFavoriteTeam" required>
+              <option value="">Selecciona tu equipo</option>
+            </select>
+          </div>
+          <button class="button button-primary" type="submit">Crear cuenta</button>
+          <p class="auth-message" id="registerMessage" role="status"></p>
+        </form>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <h3>Iniciar sesion</h3>
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" name="loginEmail" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="loginPassword">Contraseña</label>
+            <input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="button button-primary" type="submit">Entrar</button>
+          <p class="auth-message" id="loginMessage" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="user-session is-hidden" id="userSession" aria-label="Sesion del usuario">
+      <p>Usuario activo: <strong id="activeUserName"></strong></p>
+      <button class="button button-secondary" type="button" id="logoutButton">Cerrar sesion</button>
+    </section>
+
+    <section class="app-section is-disabled" id="appSection" aria-label="Zona personal de partidos">
+      <p class="login-warning" id="loginWarning">Inicia sesion o crea una cuenta para registrar tus partidos y ver tus estadisticas.</p>
+
+      <div class="layout-grid" aria-label="Gestion de partidos">
+      <div class="form-panel" id="registrar">
+        <div class="section-heading">
+          <p class="eyebrow">Formulario</p>
+          <h2>Registrar partido visto</h2>
+        </div>
+
+        <form id="matchForm" novalidate>
+          <div class="form-grid">
+            <div class="field field-center">
+              <label for="liga">Liga</label>
+              <select id="liga" name="liga" required>
+                <option value="laliga">LALIGA EA SPORTS</option>
+                <option value="premier">Premier League</option>
+              </select>
+              <small class="error" id="ligaError"></small>
+            </div>
+
+            <div class="field">
+              <label for="fecha">Fecha</label>
+              <input id="fecha" name="fecha" type="date" required>
+              <small class="error" id="fechaError"></small>
+            </div>
+
+            <div class="field">
+              <label for="hora">Hora</label>
+              <input id="hora" name="hora" type="time" required>
+              <small class="error" id="horaError"></small>
+            </div>
+
+            <div class="field">
+              <label for="equipoLocal">Equipo local</label>
+              <select id="equipoLocal" name="equipoLocal" required>
+                <option value="">Selecciona equipo local</option>
+              </select>
+              <small class="error" id="equipoLocalError"></small>
+            </div>
+
+            <div class="field">
+              <label for="equipoVisitante">Equipo visitante</label>
+              <select id="equipoVisitante" name="equipoVisitante" required>
+                <option value="">Selecciona equipo visitante</option>
+              </select>
+              <small class="error" id="equipoVisitanteError"></small>
+            </div>
+
+            <div class="team-preview" id="localPreview" aria-live="polite">
+              <span class="crest-fallback">L</span>
+              <span>Equipo local</span>
+            </div>
+
+            <div class="team-preview" id="visitorPreview" aria-live="polite">
+              <span class="crest-fallback">V</span>
+              <span>Equipo visitante</span>
+            </div>
+
+            <div class="field">
+              <label for="golesLocal">Goles local</label>
+              <input id="golesLocal" name="golesLocal" type="number" min="0" max="20" value="0" required>
+              <small class="error" id="golesLocalError"></small>
+            </div>
+
+            <div class="field">
+              <label for="golesVisitante">Goles visitante</label>
+              <input id="golesVisitante" name="golesVisitante" type="number" min="0" max="20" value="0" required>
+              <small class="error" id="golesVisitanteError"></small>
+            </div>
+
+            <div class="field">
+              <label for="lugar">Lugar donde lo viste</label>
+              <select id="lugar" name="lugar" required>
+                <option value="">Selecciona una opcion</option>
+                <option value="Estadio">Estadio</option>
+                <option value="Casa">Casa</option>
+                <option value="Bar">Bar</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <small class="error" id="lugarError"></small>
+            </div>
+
+            <div class="field">
+              <label for="valoracion">Valoracion del partido</label>
+              <select id="valoracion" name="valoracion" required>
+                <option value="">Selecciona una nota</option>
+                <option value="1">1/5</option>
+                <option value="2">2/5</option>
+                <option value="3">3/5</option>
+                <option value="4">4/5</option>
+                <option value="5">5/5</option>
+              </select>
+              <small class="error" id="valoracionError"></small>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" rows="4" placeholder="Ej. Partido visto con amigos, buen ambiente, goles destacados..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="button button-primary" type="submit">Guardar partido</button>
+            <button class="button button-secondary" type="reset">Limpiar</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="stats-panel" id="estadisticas" aria-labelledby="stats-title">
+        <div class="section-heading">
+          <p class="eyebrow">Estadisticas</p>
+          <h2 id="stats-title">Resumen personal</h2>
+        </div>
+        <dl class="stats-list">
+          <div>
+            <dt>Total partidos</dt>
+            <dd id="totalPartidos">0</dd>
+          </div>
+          <div>
+            <dt>Total goles</dt>
+            <dd id="totalGoles">0</dd>
+          </div>
+          <div>
+            <dt>Promedio goles</dt>
+            <dd id="promedioGoles">0</dd>
+          </div>
+          <div>
+            <dt>Lugar mas usado</dt>
+            <dd id="lugarHabitual">-</dd>
+          </div>
+          <div>
+            <dt>Equipo favorito</dt>
+            <dd id="equipoFavorito">-</dd>
+          </div>
+          <div>
+            <dt>Partidos de tu favorito</dt>
+            <dd id="partidosFavorito">0</dd>
+          </div>
+          <div>
+            <dt>Equipo mas visto</dt>
+            <dd id="equipoMasVisto">-</dd>
+          </div>
+          <div>
+            <dt>Mayor goleada vista</dt>
+            <dd id="mayorGoleada">-</dd>
+          </div>
+          <div>
+            <dt>Valoracion media</dt>
+            <dd id="valoracionMedia">-</dd>
+          </div>
+        </dl>
+      </aside>
+      </div>
+    </section>
+
+    <section class="history-section is-disabled" id="historial" aria-labelledby="history-title">
+      <div class="section-heading">
+        <p class="eyebrow">Historial</p>
+        <h2 id="history-title">Partidos registrados</h2>
+      </div>
+
+      <div class="filters" aria-label="Filtros del historial">
+        <label for="filterText">Buscar por equipo</label>
+        <input id="filterText" type="search" placeholder="Nombre del equipo">
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <caption>Listado de partidos vistos por el usuario</caption>
+          <thead>
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Liga</th>
+              <th scope="col">Partido</th>
+              <th scope="col">Resultado</th>
+              <th scope="col">Lugar</th>
+              <th scope="col">Accion</th>
+            </tr>
+          </thead>
+          <tbody id="matchesTable"></tbody>
+        </table>
+      </div>
+
+      <p class="empty-state" id="emptyState">Todavia no hay partidos registrados.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Futbic</p>
+  </footer>
+
+  <script src="../config/config.js"></script>
+  <script src="../models/UsuarioModel.js"></script>
+  <script src="../models/PartidoModel.js"></script>
+  <script src="../viewmodel/PartidoViewModel.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
